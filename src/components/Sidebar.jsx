@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import './SideBar.css';
 
-export default function SideBar({ isOpen, toggleSidebar }) {
+export default function Sidebar({ isOpen, toggleSidebar }) {
   return (
     <div className={`sidebar ${isOpen ? "open" : ""}`}>
       <div className="sidebar-header">
