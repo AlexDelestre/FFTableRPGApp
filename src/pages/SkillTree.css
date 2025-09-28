@@ -1,0 +1,15 @@
+/* SkillTree page */
+.skilltree-page {
+  padding: 1em;
+}
+
+.skilltree-page h2 {
+  font-size: 1.25em;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+
+.skilltree-page p {
+  color: #ccc;
+  line-height: 1.4;
+}

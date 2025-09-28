@@ -1,0 +1,69 @@
+/* Equipment page */
+.equipment-page {
+  padding: 1em;
+}
+
+.equipment-page h2 {
+  font-size: 1.25em;
+  font-weight: bold;
+  margin-bottom: 1em;
+}
+
+/* Argent / monnaie */
+.money-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1em;
+  margin-bottom: 1em;
+}
+
+.money-item label {
+  display: block;
+  margin-bottom: 0.25em;
+  font-weight: 500;
+}
+
+.money-item input {
+  width: 100%;
+  padding: 0.3em 0.5em;
+  border-radius: 6px;
+  border: 1px solid #333;
+  background-color: #1a1a1a;
+  color: #fff;
+}
+
+/* Bouton ajout équipement */
+.add-equipment-btn {
+  background-color: #0077ff;
+  color: white;
+  padding: 0.5em 1em;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 0.5em;
+}
+
+.add-equipment-btn:hover {
+  background-color: #005bb5;
+}
+
+/* Liste des équipements */
+.equipment-list {
+  margin-top: 1em;
+  list-style: none;
+  padding: 0;
+}
+
+.equipment-item {
+  border: 1px solid #333;
+  padding: 0.5em;
+  border-radius: 6px;
+  background-color: #1c1c1c;
+  margin-bottom: 0.5em;
+}
+
+.equipment-item p {
+  font-size: 0.9em;
+  color: #ccc;
+  margin-top: 0.25em;
+}

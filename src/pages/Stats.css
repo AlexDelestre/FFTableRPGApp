@@ -1,0 +1,31 @@
+/* Stats page */
+.stats-page {
+  padding: 1em;
+}
+
+.stats-page h2 {
+  font-size: 1.25em;
+  font-weight: bold;
+  margin-bottom: 1em;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5em 1em;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 0.25em;
+  border-bottom: 1px solid #333;
+}
+
+.stat-name {
+  font-weight: 500;
+}
+
+.stat-value {
+  color: #ccc;
+}

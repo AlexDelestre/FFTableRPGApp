@@ -1,45 +1,39 @@
-import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useState } from "react";
+
+import Sidebar from "./components/Sidebar.jsx";
+import Navbar from "./components/Navbar.jsx";
+
+import Stats from "./pages/Stats.jsx";
+import Equipment from "./pages/Equipment.jsx";
+import SkillTree from "./pages/SkillTree.jsx";
 
 function App() {
-  const [skills, setSkills] = useState(() => {
-    const saved = localStorage.getItem("playerSkills");
-    return saved ? JSON.parse(saved) : [];
-  });
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  useEffect(() => {
-    localStorage.setItem("playerSkills", JSON.stringify(skills));
-  }, [skills]);
-
-  const toggleSkill = (skill) => {
-    setSkills((prev) =>
-      prev.includes(skill)
-        ? prev.filter((s) => s !== skill)
-        : [...prev, skill]
-    );
-  };
-
-  const allSkills = [
-    { id: "tir_rapide", name: "Tir Rapide" },
-    { id: "vue_perçante", name: "Vue Perçante" },
-    { id: "camouflage", name: "Camouflage" },
-  ];
+  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>🌳 Arbre de compétences</h1>
-      <p>Choisis tes compétences :</p>
-      <ul>
-        {allSkills.map((skill) => (
-          <li key={skill.id}>
-            <button onClick={() => toggleSkill(skill.id)}>
-              {skills.includes(skill.id) ? "✅ " : "⬜ "} {skill.name}
-            </button>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Router>
+      <div className="app-container">
+        {/* Navbar */}
+        <Navbar toggleSidebar={toggleSidebar} />
+
+        {/* Sidebar */}
+        <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
+
+        {/* Main content */}
+        <div className="main-content">
+          <Routes>
+            <Route path="/stats" element={<Stats />} />
+            <Route path="/equipment" element={<Equipment />} />
+            <Route path="/skill-tree" element={<SkillTree />} />
+            <Route path="*" element={<Stats />} /> {/* Page par défaut */}
+          </Routes>
+        </div>
+      </div>
+    </Router>
   );
 }
-
 
 export default App;
