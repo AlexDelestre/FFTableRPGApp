@@ -1,6 +1,6 @@
 import './NavBar.css';
 
-export default function Navbar({ toggleSidebar }) {
+export default function NavBar({ toggleSidebar }) {
   return (
     <div className="navbar">
       <button onClick={toggleSidebar}>☰</button>

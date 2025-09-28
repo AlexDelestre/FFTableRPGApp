@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 
-import Sidebar from "./components/Sidebar.jsx";
-import Navbar from "./components/Navbar.jsx";
+import Sidebar from "./components/SideBar.jsx";
+import Navbar from "./components/NavBar.jsx";
 
 import Stats from "./pages/Stats.jsx";
 import Equipment from "./pages/Equipment.jsx";
@@ -17,10 +17,10 @@ function App() {
     <Router>
       <div className="app-container">
         {/* Navbar */}
-        <Navbar toggleSidebar={toggleSidebar} />
+        <NavBar toggleSidebar={toggleSidebar} />
 
         {/* Sidebar */}
-        <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
+        <SideBar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
 
         {/* Main content */}
         <div className="main-content">
