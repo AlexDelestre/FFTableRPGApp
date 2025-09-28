@@ -9,23 +9,49 @@
   margin-bottom: 1em;
 }
 
+/* Grille principale à deux colonnes */
 .stats-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.5em 1em;
+  display: flex;
+  gap: 2em; /* espace entre les colonnes */
+  flex-wrap: wrap; /* pour mobile, les colonnes s'empilent */
+}
+
+.stats-column {
+  flex: 1; /* chaque colonne prend moitié de l'espace disponible */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
 }
 
 .stat-row {
   display: flex;
-  justify-content: space-between;
-  padding-bottom: 0.25em;
-  border-bottom: 1px solid #333;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.25em 0;
+  border-bottom: 1px solid #ccc;
 }
 
 .stat-name {
   font-weight: 500;
+  width: 120px; /* largeur fixe pour aligner les valeurs */
 }
 
 .stat-value {
   color: #ccc;
+  flex: 1; /* prend tout l'espace restant */
+}
+
+.edit-stat-btn {
+  background-color: #f59e0b;
+  border: none;
+  color: white;
+  font-weight: bold;
+  padding: 0.25em 0.5em;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 0.5em;
+}
+
+.edit-stat-btn:hover {
+  background-color: #b45309;
 }
