@@ -1,19 +1,33 @@
 .warrior-tree {
   position: relative;
   padding-top: 1em;
+  overflow-x: auto; /* scroll horizontal si nécessaire */
+  overflow-y: auto; /* scroll vertical si nécessaire */
+  white-space: nowrap; /* évite que les skills passent à la ligne si tu veux une longue ligne */
 }
 
+/* Chaque niveau de skills sur une ligne */
+.skill-level {
+  display: flex;
+  flex-wrap: wrap; /* ou nowrap si tu veux absolument une ligne continue */
+  justify-content: center;
+  gap: 1em;
+  margin-bottom: 1em;
+}
+
+/* Grid générale si besoin pour le wrapping */
 .skills-grid {
   display: flex;
+  flex-direction: column; /* une ligne par niveau */
   gap: 1em;
-  flex-wrap: wrap;
   margin-top: 1em;
 }
 
+/* Pastille de skill */
 .skill-dot {
-  width: 50px;
+  width: 120px; /* largeur fixe */
   height: 50px;
-  border-radius: 50%;
+  border-radius: 25px;
   background-color: #4ade80;
   display: flex;
   align-items: center;
@@ -21,7 +35,19 @@
   cursor: pointer;
   font-weight: bold;
   color: white;
-  transition: transform 0.2s, background-color 0.2s, opacity 0.2s;
+  text-align: center;
+  
+  padding: 0 5px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.skill-dot span {
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
 }
 
 .skill-dot:hover {
@@ -39,6 +65,7 @@
   color: black;
 }
 
+/* Popup */
 .popup-overlay {
   position: fixed;
   top: 0;
@@ -59,7 +86,13 @@
   border-radius: 8px;
   max-width: 300px;
   text-align: center;
+  
+  /* Ajouts pour le wrapping */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
 }
+
 
 .popup-content button {
   margin: 0.5em;
