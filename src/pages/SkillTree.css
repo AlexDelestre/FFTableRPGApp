@@ -13,3 +13,47 @@
   color: #ccc;
   line-height: 1.4;
 }
+
+/* Menu des arbres */
+.trees-menu {
+  display: flex;
+  gap: 1em; /* espace entre les boutons */
+  margin-bottom: 1em;
+}
+
+.trees-menu button {
+  padding: 0.5em 1em;
+  border: 2px solid;
+  border-radius: 8px;
+  background-color: #1f2937; /* fond sombre */
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.trees-menu button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+/* Couleurs spécifiques à chaque classe */
+.trees-menu button.guerrier {
+  border-color: #f59e0b; /* orange */
+}
+
+.trees-menu button.mage-noir {
+  border-color: #8b5cf6; /* violet */
+}
+
+.trees-menu button.mage-blanc {
+  border-color: #3b82f6; /* bleu clair */
+}
+
+.trees-menu button.monk {
+  border-color: #10b981; /* vert */
+}
+
+.trees-menu button.barbare {
+  border-color: #ef4444; /* rouge */
+}

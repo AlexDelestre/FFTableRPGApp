@@ -1,0 +1,113 @@
+.monk-tree {
+  position: relative;
+  padding-top: 1em;
+  overflow-x: auto; /* scroll horizontal si nécessaire */
+  overflow-y: auto; /* scroll vertical si nécessaire */
+  white-space: nowrap; /* évite que les skills passent à la ligne si tu veux une longue ligne */
+}
+
+/* Chaque niveau de skills sur une ligne */
+.skill-level {
+  display: flex;
+  flex-wrap: wrap; /* ou nowrap si tu veux absolument une ligne continue */
+  justify-content: center;
+  gap: 1em;
+  margin-bottom: 1em;
+}
+
+/* Grid générale si besoin pour le wrapping */
+.skills-grid {
+  display: flex;
+  flex-direction: column; /* une ligne par niveau */
+  gap: 1em;
+  margin-top: 1em;
+}
+
+/* Pastille de skill */
+.skill-dot {
+  width: 120px; /* largeur fixe */
+  height: 50px;
+  border-radius: 25px;
+  background-color: #4ade80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  
+  padding: 0 5px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.skill-dot span {
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.skill-dot:hover {
+  transform: scale(1.1);
+  background-color: #16a34a;
+}
+
+.skill-dot.locked {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.skill-dot.learned {
+  background-color: #facc15;
+  color: black;
+}
+
+/* Popup */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.popup-content {
+  background-color: #1f2937;
+  color: white;
+  padding: 1em 2em;
+  border-radius: 8px;
+  max-width: 300px;
+  text-align: center;
+  
+  /* Ajouts pour le wrapping */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
+
+.popup-content button {
+  margin: 0.5em;
+  padding: 0.5em 1em;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.popup-content button:first-of-type {
+  background-color: #4ade80;
+  color: black;
+}
+
+.popup-content button:last-of-type {
+  background-color: #f87171;
+  color: black;
+}

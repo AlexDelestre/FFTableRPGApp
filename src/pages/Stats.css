@@ -9,6 +9,96 @@
   margin-bottom: 1em;
 }
 
+/* Bouton principal de création */
+.new-character-btn {
+  background: linear-gradient(135deg, #4a90e2, #357ab8);
+  color: white;
+  font-weight: bold;
+  padding: 0.75em 1.5em;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  margin: 0.5em 0;
+}
+
+.new-character-btn:hover {
+  background: linear-gradient(135deg, #5aa0f2, #4686d1);
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+
+/* Boutons de sélection Race & Classe */
+.popup-overlay-create {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.popup-content-create {
+  background-color: #1f2937;
+  color: white;
+  padding: 1em 2em;
+  border-radius: 8px;
+  max-width: 300px;
+  text-align: center;
+  
+  /* Ajouts pour le wrapping */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
+.popup-content-create button {
+  background: #222;
+  color: #ccc;
+  padding: 0.5em 1em;
+  margin: 0.3em;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.popup-content-create button:hover {
+  background: #333;
+  color: white;
+}
+
+/* Bouton sélectionné */
+.popup-content-create button.selected {
+  background: #4a90e2;
+  color: white;
+  border: 2px solid #1e5fa6;
+  box-shadow: 0 0 10px rgba(74,144,226,0.6);
+}
+
+.popup-content-create .validate-btn-create {
+  display: block;
+  margin: 1em auto 0 auto;
+  background: #28a745;
+  color: white;
+  font-weight: bold;
+  padding: 0.7em 1.5em;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.popup-content-create .validate-btn-create:hover {
+  background: #34c759;
+  transform: scale(1.05);
+}
+
 /* Grille principale à deux colonnes */
 .stats-grid {
   display: flex;
