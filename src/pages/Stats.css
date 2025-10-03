@@ -11,7 +11,7 @@
 
 /* Bouton principal de création */
 .new-character-btn {
-  background: linear-gradient(135deg, #4a90e2, #357ab8);
+  background: linear-gradient(135deg, #c92b16, #c56e0a);
   color: white;
   font-weight: bold;
   padding: 0.75em 1.5em;
@@ -24,7 +24,47 @@
 }
 
 .new-character-btn:hover {
-  background: linear-gradient(135deg, #5aa0f2, #4686d1);
+  background: linear-gradient(135deg, #db260e, #e78515);
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+
+/* Bouton de level-up */
+.level-up-btn {
+  background: linear-gradient(135deg, #777506, #d39e0d);
+  color: white;
+  font-weight: bold;
+  padding: 0.75em 1.5em;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  margin: 0.5em 0;
+}
+
+.level-up-btn:hover {
+  background: linear-gradient(135deg, #112fda, #eeb10a);
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+
+/* Bouton de level-down */
+.level-down-btn {
+  background: linear-gradient(135deg, #080677, #281bd1);
+  color: white;
+  font-weight: bold;
+  padding: 0.75em 1.5em;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  margin: 0.5em 0;
+}
+
+.level-down-btn:hover {
+  background: linear-gradient(135deg, rgb(37, 54, 150), #231d75);
   transform: scale(1.05);
   box-shadow: 0 6px 12px rgba(0,0,0,0.3);
 }

@@ -1,15 +1,16 @@
-.barbare-tree {
+.tree {
   position: relative;
   padding-top: 1em;
-  overflow-x: auto; /* scroll horizontal si nécessaire */
-  overflow-y: auto; /* scroll vertical si nécessaire */
+  width: 1300px;    /* fixe la largeur totale de l’arbre */
+  height: 800px; 
+  overflow: auto;
   white-space: nowrap; /* évite que les skills passent à la ligne si tu veux une longue ligne */
 }
 
 /* Chaque niveau de skills sur une ligne */
 .skill-level {
   display: flex;
-  flex-wrap: wrap; /* ou nowrap si tu veux absolument une ligne continue */
+  flex-wrap: nowrap;
   justify-content: center;
   gap: 1em;
   margin-bottom: 1em;
@@ -25,10 +26,11 @@
 
 /* Pastille de skill */
 .skill-dot {
+  position: relative;
   width: 120px; /* largeur fixe */
   height: 50px;
   border-radius: 25px;
-  background-color: #4ade80;
+  background-color: #28a155;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -36,6 +38,7 @@
   font-weight: bold;
   color: white;
   text-align: center;
+  z-index: 1;
   
   padding: 0 5px;
   white-space: nowrap;
@@ -56,7 +59,7 @@
 }
 
 .skill-dot.locked {
-  opacity: 0.4;
+  background-color: #262b36;
   cursor: not-allowed;
 }
 
@@ -111,3 +114,14 @@
   background-color: #f87171;
   color: black;
 }
+
+.skill-connections {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* permet de cliquer à travers */
+  z-index: 0; /* 🔴 derrière les pastilles */
+}
+

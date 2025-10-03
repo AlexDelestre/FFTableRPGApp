@@ -1,30 +1,11 @@
-import { useState, useEffect } from "react";
-import "./BlackMage.css";
+import { useState, useEffect, useRef, useLayoutEffect } from "react";
+import "./Tree.css";
 
 const skills = [
   { id: 1, name: "Coup puissant", description: "Inflige +10 dégâts", cost: 2, level: 1 },
-  { id: 2, name: "Bouclier solide", description: "Augmente la défense de 5", cost: 3, level: 2, prerequisite: 1 },
-  { id: 3, name: "Furie du guerrier", description: "Inflige +25 dégâts sur un coup critique", cost: 5, level: 3, prerequisite: 2 },
-  { id: 4, name: "Riposte", description: "Contre-attaque automatiquement", cost: 3, level: 2, prerequisite: 1 },
-  { id: 5, name: "Coup tournoyant", description: "Attaque tous les ennemis autour", cost: 4, level: 3, prerequisite: 4 },
   { id: 6, name: "Maîtrise de l'épée", description: "+2 précision sur les attaques", cost: 2, level: 1 },
-  { id: 7, name: "Garde renforcée", description: "Réduit les dégâts subis de 5%", cost: 3, level: 2, prerequisite: 6 },
-  { id: 8, name: "Cri de guerre", description: "Augmente la puissance de tous les alliés", cost: 4, level: 2, prerequisite: 1 },
-  { id: 9, name: "Frappe dévastatrice", description: "+50 dégâts mais consomme 2 AP", cost: 6, level: 3, prerequisite: 3 },
   { id: 10, name: "Endurance", description: "+10 PV maximum", cost: 2, level: 1 },
-  { id: 11, name: "Regain d'énergie", description: "Récupère 3 AP par tour", cost: 4, level: 2, prerequisite: 10 },
-  { id: 12, name: "Coup écrasant", description: "Inflige +20 dégâts et étourdit l'ennemi", cost: 5, level: 3, prerequisite: 11 },
-  { id: 13, name: "Parade experte", description: "Chance d'annuler une attaque ennemie", cost: 3, level: 2, prerequisite: 7 },
-  { id: 14, name: "Charge du guerrier", description: "Se déplace rapidement et frappe fort", cost: 4, level: 2, prerequisite: 1 },
-  { id: 15, name: "Fracas", description: "Inflige dégâts à tous les ennemis en ligne", cost: 6, level: 3, prerequisite: 14 },
-  { id: 16, name: "Force herculéenne", description: "+5 dégâts sur toutes les attaques", cost: 5, level: 3, prerequisite: 6 },
-  { id: 17, name: "Courage indomptable", description: "Immunité à la peur", cost: 3, level: 2, prerequisite: 10 },
-  { id: 18, name: "Frappe rapide", description: "Attaque deux fois par tour", cost: 6, level: 3, prerequisite: 16 },
-  { id: 19, name: "Blocage parfait", description: "Annule totalement une attaque", cost: 7, level: 3, prerequisite: 7 },
-  { id: 20, name: "Appel à la bataille", description: "Rallie les alliés et restaure 5 AP", cost: 4, level: 2, prerequisite: 8 },
-  { id: 21, name: "Écrasement", description: "Inflige +40 dégâts sur un ennemi unique", cost: 7, level: 3, prerequisite: 9 },
-  { id: 22, name: "Instinct du guerrier", description: "Augmente la vitesse de 10%", cost: 3, level: 2, prerequisite: 1 },
-  { id: 23, name: "Coup précis", description: "Ignorer 5 points de défense ennemie", cost: 4, level: 2, prerequisite: 16 },
+  { id: 2, name: "Bouclier solide", description: "Augmente la défense de 5", cost: 3, level: 2, prerequisite: 1 },
 ];
 
 export default function BlackMage() {
@@ -33,13 +14,46 @@ export default function BlackMage() {
     return saved ? JSON.parse(saved) : [];
   });
 
+  const [connections, setConnections] = useState([]);
+  const skillRefs = useRef({})
+
   const [popupSkill, setPopupSkill] = useState(null);
 
-  // AP depuis stats
   const [stats, setStats] = useState(() => {
     const saved = localStorage.getItem("stats");
-    return saved ? JSON.parse(saved) : { AP: 10 }; // fallback
+    return saved ? JSON.parse(saved) : { AP: 10 };
   });
+
+  useLayoutEffect(() => {
+    const updateConnections = () => {
+      const newConnections = [];
+
+      skills.forEach(skill => {
+        if (!skill.prerequisite) return;
+        const parentRef = skillRefs.current[skill.prerequisite];
+        const childRef = skillRefs.current[skill.id];
+        if (parentRef && childRef) {
+          const parentRect = parentRef.getBoundingClientRect();
+          const childRect = childRef.getBoundingClientRect();
+          const containerRect = parentRef.closest(".tree").getBoundingClientRect();
+
+          newConnections.push({
+            id: skill.id,
+            startX: parentRect.left + parentRect.width / 2 - containerRect.left,
+            startY: parentRect.top + parentRect.height / 2 - containerRect.top,
+            endX: childRect.left + childRect.width / 2 - containerRect.left,
+            endY: childRect.top + childRect.height / 2 - containerRect.top,
+          });
+        }
+      });
+
+      setConnections(newConnections);
+    };
+
+    updateConnections(); // calcul initial
+    window.addEventListener("resize", updateConnections);
+    return () => window.removeEventListener("resize", updateConnections);
+  }, [learnedSkills]);
 
   useEffect(() => {
     localStorage.setItem("blackmageSkills", JSON.stringify(learnedSkills));
@@ -63,14 +77,14 @@ export default function BlackMage() {
     }
   };
 
-  // Fonction pour trouver toutes les compétences dépendantes
+  // Récupérer toutes les compétences dépendantes récursivement
   const getDependentSkills = (skillId) => {
     const dependents = [];
     const findDependents = (id) => {
       skills.forEach(s => {
         if (s.prerequisite === id && learnedSkills.includes(s.id)) {
           dependents.push(s);
-          findDependents(s.id); // récursif
+          findDependents(s.id);
         }
       });
     };
@@ -79,7 +93,7 @@ export default function BlackMage() {
   };
 
   const confirmSkill = (skill) => {
-    const currentAP = parseInt(stats["AP"]) || 0;
+    const currentAP = parseInt(stats.AP) || 0;
 
     if (learnedSkills.includes(skill.id)) {
       if (window.confirm(`Voulez-vous oublier "${skill.name}" ? Cela supprimera aussi toutes les compétences dépendantes.`)) {
@@ -114,10 +128,24 @@ export default function BlackMage() {
   };
 
   return (
-    <div className="black-mage-tree">
+    <div className="tree">
       <div className="ap-counter">
-        <strong>AP disponibles :</strong> {stats["AP"]}
+        <strong>AP disponibles :</strong> {stats.AP}
       </div>
+
+      <svg className="skill-connections">
+        {connections.map((c) => (
+          <line
+            key={c.id}
+            x1={c.startX}
+            y1={c.startY}
+            x2={c.endX}
+            y2={c.endY}
+            stroke="white"
+            strokeWidth="2"
+          />
+        ))}
+      </svg>
 
       {Array.from({ length: 5 }, (_, lvl) => lvl + 1).map(level => (
         <div key={level} className="skill-level">
@@ -129,6 +157,7 @@ export default function BlackMage() {
               return (
                 <div
                   key={skill.id}
+                  ref={el => (skillRefs.current[skill.id] = el)}
                   className={`skill-dot ${learned ? "learned" : ""} ${locked ? "locked" : ""}`}
                   onClick={() => handleSkillClick(skill)}
                   title={skill.name}

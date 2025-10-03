@@ -43,6 +43,7 @@ export default function Stats() {
   const [showCreationPopup, setShowCreationPopup] = useState(false);
   const [selectedRace, setSelectedRace] = useState(null);
   const [selectedClass, setSelectedClass] = useState(null);
+  const [levelUpChanges, setLevelUpChanges] = useState(null);
 
   useEffect(() => {
     localStorage.setItem("stats", JSON.stringify(stats));
@@ -99,6 +100,90 @@ export default function Stats() {
     setShowCreationPopup(false);
   };
 
+  const levelUp = () => {
+    const raceStats = races[stats.Race] || {};
+    const clsInfo = classes[stats.Classe] || {};
+
+    const newStats = { ...stats };
+    newStats.Niveau = (parseInt(stats.Niveau) || 1) + 1;
+
+    const changes = {};
+
+    Object.keys(raceStats).forEach(key => {
+      if (newStats[key] !== undefined && typeof newStats[key] === "number") {
+        changes[key] = raceStats[key];
+        newStats[key] += raceStats[key];
+      }
+    });
+
+    Object.keys(clsInfo).forEach(key => {
+      if (key === "initialSkills") return;
+      if (newStats[key] !== undefined && typeof newStats[key] === "number") {
+        changes[key] = (changes[key] || 0) + clsInfo[key];
+        newStats[key] += clsInfo[key];
+      }
+    });
+
+    setLevelUpChanges(changes);
+    // on attend la confirmation avant de changer les stats
+  };
+
+  const confirmLevelUp = () => {
+    if (!levelUpChanges) return;
+    const raceStats = races[stats.Race] || {};
+    const clsInfo = classes[stats.Classe] || {};
+    const newStats = { ...stats };
+
+    // Appliquer le niveau
+    newStats.Niveau = (parseInt(stats.Niveau) || 1) + 1;
+
+    // Appliquer tous les changements
+    Object.keys(levelUpChanges).forEach(key => {
+      if (newStats[key] !== undefined && typeof newStats[key] === "number") {
+        newStats[key] += levelUpChanges[key];
+      }
+    });
+
+    setStats(newStats);
+    setLevelUpChanges(null);
+  };
+
+  const cancelLevelUp = () => {
+    setLevelUpChanges(null);
+  };
+
+  const levelDown = () => {
+    if ((parseInt(stats.Niveau) || 1) <= 1) {
+      alert("Vous êtes déjà au niveau 1, impossible de descendre plus bas !");
+      return;
+    }
+
+    const raceStats = races[stats.Race] || {};
+    const clsInfo = classes[stats.Classe] || {};
+
+    const newStats = { ...stats };
+
+    // Diminue le niveau
+    newStats.Niveau = (parseInt(stats.Niveau) || 1) - 1;
+
+    // Retire les bonus de la race
+    Object.keys(raceStats).forEach(key => {
+      if (newStats[key] !== undefined && typeof newStats[key] === "number") {
+        newStats[key] -= raceStats[key];
+      }
+    });
+
+    // Retire les bonus de la classe
+    Object.keys(clsInfo).forEach(key => {
+      if (key === "initialSkills") return; // ignore les compétences
+      if (newStats[key] !== undefined && typeof newStats[key] === "number") {
+        newStats[key] -= clsInfo[key];
+      }
+    });
+
+    setStats(newStats);
+  };
+
   const editStat = (stat) => {
     const newValue = prompt(`Modifier ${stat}:`, stats[stat]);
     if (newValue !== null) {
@@ -114,7 +199,9 @@ export default function Stats() {
     <div className="stats-page">
       <h2>📊 Stats du personnage</h2>
 
-      <button className="new-character-btn" onClick={startNewCharacter}>Créer un nouveau personnage</button>
+      <button className="level-up-btn" onClick={levelUp}>
+        ⬆ Monter de niveau
+      </button>
 
       {showCreationPopup && (
         <div className="popup-overlay-create" onClick={() => setShowCreationPopup(false)}>
@@ -154,6 +241,25 @@ export default function Stats() {
         </div>
       )}
 
+      {levelUpChanges && (
+        <div className="popup-overlay" onClick={cancelLevelUp}>
+          <div className="popup-content" onClick={e => e.stopPropagation()}>
+            <h3>Montée de niveau !</h3>
+            <p>Voici les changements appliqués</p>
+            <ul>
+              <li>Niveau: +1</li>
+              {Object.keys(levelUpChanges).map(stat => (
+                <li key={stat}>
+                  {stat}: +{levelUpChanges[stat]}
+                </li>
+              ))}
+            </ul>
+            <button onClick={confirmLevelUp}>Confirmer</button>
+            <button onClick={cancelLevelUp}>Annuler</button>
+          </div>
+        </div>
+      )}
+
       <div className="stats-grid">
         <div className="stats-column">
           {leftStats.map((stat, idx) => (
@@ -174,6 +280,11 @@ export default function Stats() {
           ))}
         </div>
       </div>
+
+      <button className="level-down-btn" onClick={levelDown}>
+        ⬇ Baisser de niveau
+      </button>
+      <button className="new-character-btn" onClick={startNewCharacter}>Créer un nouveau personnage</button>
     </div>
   );
 }

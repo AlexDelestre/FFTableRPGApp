@@ -37,6 +37,11 @@
   box-shadow: 0 4px 6px rgba(0,0,0,0.3);
 }
 
+.tree-container {
+  overflow-x: auto; /* permet le défilement horizontal si nécessaire */
+  padding-bottom: 1em;
+}
+
 /* Couleurs spécifiques à chaque classe */
 .trees-menu button.guerrier {
   border-color: #f59e0b; /* orange */
